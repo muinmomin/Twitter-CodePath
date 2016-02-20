@@ -53,6 +53,26 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    func likeWithCompletion(id: String?, completion: (error: NSError?) -> ()) {
+        POST("1.1/favorites/create.json?id=\(id!)", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+            completion(error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("couldnt like")
+                completion(error: error)
+        })
+        
+    }
+    
+    func retweetWithCompletion(id: String?, completion: (error: NSError?) -> ()) {
+        POST("1.1/statuses/retweet/\(id!).json", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+            completion(error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("couldnt retweet")
+                completion(error: error)
+        })
+        
+    }
+    
     func openURL(url: NSURL) {
         fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential(queryString: url.query), success: { (accessToken: BDBOAuth1Credential!) -> Void in
             print("Got access token.")
