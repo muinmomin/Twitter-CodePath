@@ -15,17 +15,18 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-
-        // Do any additional setup after loading the view.
+        
         TwitterClient.sharedInstance.homeTimeLineWithParams(nil, completion: { (tweets, error) -> () in
             self.tweets = tweets
-            print(tweets)
-            // reload table data
             self.tableView.reloadData()
         })
     }
@@ -53,8 +54,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("ShowDetailTweet", sender: indexPath)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
     
     @IBAction func onLogout() {
         User.currentUser?.logout()

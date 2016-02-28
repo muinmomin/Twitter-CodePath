@@ -93,5 +93,14 @@ class TwitterClient: BDBOAuth1SessionManager {
                 self.loginCompletion?(user: nil, error: error)
         }
     }
+    
+    func tweetWithCompleition(status: String?, completion: (error: NSError?) -> ()) {
+        POST("https://api.twitter.com/1.1/statuses/update.json?\(status)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            completion(error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("couldnt retweet")
+                completion(error: error)
+        })
+    }
 
 }
