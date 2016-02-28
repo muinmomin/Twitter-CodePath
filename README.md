@@ -1,4 +1,4 @@
-# Project 4 - *Name of App Here*
+# Project 4 - *Twitter*
 
 **Name of your app** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
